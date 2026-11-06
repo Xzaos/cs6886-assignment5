@@ -1,0 +1,28 @@
+# Machine specification (Q1). Fill in every field; give units. Fill in N/A if not applicable.
+
+CPU model                       : Intel Core i5-12450H (12th Gen, laptop)
+Microarchitecture               : Alder Lake-H; P-cores Golden Cove, E-cores Gracemont
+Physical cores                  : 8 (4 P + 4 E)
+Logical cores (hardware threads): 12 (P-cores 2 threads each, E-cores 1 thread each)
+Performance / efficiency cores  : 4 P (8 threads) + 4 E (4 threads)
+Base clock (GHz)                : 2.0 GHz P-core, 1.5 GHz E-core
+Max single-core clock (GHz)     : 4.4 GHz P-core max turbo (E-core max turbo 3.3 GHz)
+All-core clock under load (GHz) : 2.81 GHz P-core, 2.54 GHz E-core (measured: 12 threads of dependent register adds, median of 3 runs)
+SIMD instruction set and width  : AVX2, 256-bit (8 FP32 lanes); no AVX-512
+FMA units per core              : P-core 2 x 256-bit (32 FLOP/cycle); E-core 2 x 128-bit, one 256-bit FMA per cycle (16 FLOP/cycle)
+Vector registers per core       : 16 ymm registers (256-bit) per hardware thread
+L1 data cache (per core)        : 48 KB P-core, 32 KB E-core
+L2 cache (size, shared by)      : 1.25 MB per P-core (private); 2 MB shared by the 4 E-cores
+L3 cache (size, shared by)      : 12 MB, shared by all 8 cores
+Cache line size (bytes)         : 64
+RAM size (GB)                   : 16 GB (WSL2 is given 7.6 GiB of it)
+RAM type, speed (MT/s), channels: DDR4-3200, 3200 MT/s, 2 channels (2 x SODIMM, 2 of 2 slots)
+Operating system                : Ubuntu 24.04.5 LTS on WSL2 (kernel 6.6.87.2-microsoft-standard-WSL2), Windows host
+Compiler and version            : Ubuntu clang 18.1.3, -O3 -march=native (-fopenmp for omp)
+
+# Derived (show the calculation in report.pdf)
+Peak FP32 GFLOP/s, one core     : 140.8 (4.4 GHz x 32 FLOP/cycle)
+Peak FP32 GFLOP/s, all cores    : 522.2 (4 x 32 x 2.81 + 4 x 16 x 2.54)
+Memory bandwidth (GB/s)         : 51.2 (3200e6 x 8 B x 2 channels, theoretical)
+Ridge point, one core (FLOP/B)  : 2.75 (140.8 / 51.2)
+Ridge point, all cores (FLOP/B) : 10.2 (522.2 / 51.2)
